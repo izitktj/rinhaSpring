@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.rinhaback.api.domain.User.User;
+import com.rinhaback.api.domain.User.UserDTO;
 import com.rinhaback.api.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -24,12 +26,23 @@ public class UserService {
 		return repository.findById(id);
 	}
 	
-	public User save(User user) {
-		return repository.save(user);
+	public User save(UserDTO user) {
+		User userEntity = new User();
+
+		userEntity.setApelido(user.getApelido());
+		userEntity.setNome(user.getNome());
+		userEntity.setNascimento(user.getNascimento());
+		userEntity.setStack(user.getStack());
+
+		return repository.save(userEntity);
 	}
 	
-	public void deleteById(UUID id) {
-		repository.deleteById(id);
+	public void deleteAll() {
+		repository.deleteAll();
+	}
+
+	public Optional<User> findByApelido(String apelido) {
+		return repository.findOneByApelido(apelido);
 	}
 
 	public long countUsers() {

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rinhaback.api.domain.User.User;
+import com.rinhaback.api.domain.User.UserDTO;
 import com.rinhaback.api.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -50,13 +54,18 @@ public class UserController {
 	}
 	
 	@PostMapping("/pessoas")
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		try {
- 			return ResponseEntity.ok(service.save(user));
-		}
-		catch(Error e) {
-			return ResponseEntity.badRequest().build();
-		}
+	public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO user) {
+		User userEntity = service.save(user);
+		return ResponseEntity
+		.status(201)
+		.header(
+			"Location",
+			new StringBuilder()
+			.append("/pessoas/")
+			.append(userEntity.getId())
+			.toString()
+		)
+		.body(user);
 	}
 
 	@GetMapping("/contagem-pessoas")
