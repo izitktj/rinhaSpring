@@ -56,6 +56,7 @@ public class UserController {
 	@PostMapping("/pessoas")
 	public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO user) {
 		User userEntity = service.save(user);
+		
 		return ResponseEntity
 		.status(201)
 		.header(

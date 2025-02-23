@@ -1,12 +1,8 @@
 package com.rinhaback.api.domain.User;
 
-import java.util.UUID;
 import java.util.Date;
 
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
