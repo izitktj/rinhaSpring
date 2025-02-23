@@ -26,7 +26,7 @@ public class UserService {
 		return repository.findById(id);
 	}
 	
-	public User save(UserDTO user) {
+	public Optional<User> save(UserDTO user) {
 		User userEntity = new User();
 
 		userEntity.setApelido(user.getApelido());
@@ -34,7 +34,11 @@ public class UserService {
 		userEntity.setNascimento(user.getNascimento());
 		userEntity.setStack(user.getStack());
 
-		return repository.save(userEntity);
+		if(findByApelido(user.getApelido()).isPresent()) {
+			return Optional.empty();
+		}
+
+		return Optional.of(repository.save(userEntity));
 	}
 	
 	public void deleteAll() {
