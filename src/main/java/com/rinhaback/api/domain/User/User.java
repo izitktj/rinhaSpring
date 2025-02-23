@@ -3,6 +3,7 @@ package com.rinhaback.api.domain.User;
 import java.util.UUID;
 import java.util.Date;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class User {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator="UUID")
 	private UUID id;
 	
 	private String apelido;
