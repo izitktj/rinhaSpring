@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.rinhaback.api.domain.User.User;
