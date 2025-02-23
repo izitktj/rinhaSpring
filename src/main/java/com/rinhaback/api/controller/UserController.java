@@ -1,11 +1,10 @@
 package com.rinhaback.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +33,13 @@ public class UserController {
 
 	@GetMapping("/pessoas/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-		try {
-			return ResponseEntity.ok(service.findByID(id).get());	
-		} 
-		catch(Exception e) {
+		Optional<User> user = service.findByID(id);
+		
+		if(!user.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
+		return ResponseEntity.ok(user.get());	
 	}
 
 	@GetMapping("/pessoas")
