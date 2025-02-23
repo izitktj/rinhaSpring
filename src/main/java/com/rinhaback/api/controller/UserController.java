@@ -44,12 +44,11 @@ public class UserController {
 
 	@GetMapping("/pessoas")
 	public ResponseEntity<List<User>> queryUser(@RequestParam("t") String term) {
-		try {
-			return ResponseEntity.ok(service.findByTerm(term));
+		if(term.isEmpty()) {
+			return ResponseEntity.badRequest().build();
 		}
-		catch(Exception e) {
-			return ResponseEntity.notFound().build();
-		}
+
+		return ResponseEntity.ok(service.findByTerm(term));
 	}
 	
 	@PostMapping("/pessoas")
